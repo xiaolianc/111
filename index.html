@@ -3,91 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>自定义文件下载</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            text-align: center;
-            background-color: #f5f5f5;
-            color: #333;
+    <title>文件下载中心</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 配置Tailwind自定义颜色 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36D399',
+                        java: '#E53935',     // Java 红色
+                        python: '#38BDF8',  // Python 蓝色
+                        dark: '#1E293B',
+                        light: '#F8FAFC',
+                        neutral: {
+                            100: '#F1F5F9',
+                            200: '#E2E8F0',
+                            300: '#CBD5E1',
+                            400: '#94A3B8',
+                            500: '#64748B',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1E293B',
+                            900: '#0F172A'
+                        }
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'card': '0 4px 20px rgba(0, 0, 0, 0.08)',
+                        'card-hover': '0 10px 30px rgba(0, 0, 0, 0.12)'
+                    }
+                }
+            }
         }
-        .container {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 30px;
-            margin-top: 30px;
-        }
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
-        .download-btn {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            margin: 20px 0;
-            transition: background-color 0.3s;
-        }
-        .download-btn:hover {
-            background-color: #2980b9;
-        }
-        .file-info {
-            background-color: #f9f9f9;
-            border-left: 4px solid #3498db;
-            padding: 15px;
-            text-align: left;
-            margin-top: 20px;
-        }
-        footer {
-            margin-top: 40px;
-            color: #7f8c8d;
-            font-size: 14px;
+    </script>
+    
+    <!-- 自定义工具类 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .card-transition {
+                @apply transition-all duration-300 ease-in-out;
+            }
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1>自定义文件下载</h1>
-        <p>点击下方按钮下载您的自定义文件：UserDefinedPhrase.dat</p>
-        
-        <!-- 这里需要替换为您的实际下载链接 -->
-        <a href="https://github.com/xiaolianc/111/raw/refs/heads/main/UserDefinedPhrase.dat" 
-           class="download-btn" download>
-            下载 UserDefinedPhrase.dat
-        </a>
-        
-        <div class="file-info">
-            <h3>文件信息</h3>
-            <p><strong>文件名：</strong>UserDefinedPhrase.dat</p>
-            <p><strong>文件类型：</strong>数据文件</p>
-            <p><strong>更新时间：</strong>2025年6月28日</p>
-            <p><strong>说明：</strong>这是一个用户自定义的数据文件，可用于各种应用场景。</p>
+<body class="bg-gray-50 font-inter text-neutral-800 min-h-screen flex flex-col">
+    <!-- 导航栏 -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fa fa-download text-primary text-2xl"></i>
+                <h1 class="text-xl font-bold text-neutral-800">文件下载中心</h1>
+            </div>
         </div>
-    </div>
-    
-    <footer>
-        <p>此下载链接由GitHub提供 | 更新于 <span id="updateDate"></span></p>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <!-- 欢迎部分 -->
+        <section class="mb-8 text-center">
+            <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-neutral-800 mb-3">选择要下载的文件</h2>
+            <p class="text-neutral-600 max-w-2xl mx-auto">从下方选择您需要的文件进行下载，每个文件都有详细的说明和更新信息。</p>
+        </section>
+
+        <!-- 文件列表区域 -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <!-- Java Web 文件卡片（使用您的下载链接） -->
+            <div class="bg-white rounded-xl shadow-card card-transition hover:shadow-card-hover hover:-translate-y-1 border-t-4 border-java">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="h-12 w-12 rounded-lg flex items-center justify-center bg-java/10">
+                            <i class="fa fa-coffee text-java text-xl"></i>
+                        </div>
+                        <h3 class="ml-4 text-lg font-semibold text-neutral-900">Java Web 开发资源包</h3>
+                    </div>
+                    
+                    <p class="text-neutral-600 text-sm mb-6">
+                        这个资源包包含了Java Web开发所需的核心库、示例代码和配置文件，帮助您快速搭建和开发Java Web应用。
+                    </p>
+                    
+                    <div class="flex items-center text-xs text-neutral-500 mb-6">
+                        <div class="flex items-center mr-4">
+                            <i class="fa fa-calendar-o mr-1"></i>
+                            <span>更新于 2025-06-28</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fa fa-file-o mr-1"></i>
+                            <span>大小: 54.2 MB</span>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="block w-full py-3 px-4 bg-java text-white rounded-lg font-medium text-center hover:bg-java/90 transition-colors" onclick="downloadFile('Java Web 开发资源包', 'https://47.104.135.230:18782/down/54K5pFUEmemB.dat')">
+                        <i class="fa fa-download mr-1"></i> 下载文件
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Python 文件卡片（示例链接，可替换为第二个文件） -->
+            <div class="bg-white rounded-xl shadow-card card-transition hover:shadow-card-hover hover:-translate-y-1 border-t-4 border-python">
+                <div class="p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="h-12 w-12 rounded-lg flex items-center justify-center bg-python/10">
+                            <i class="fa fa-code text-python text-xl"></i>
+                        </div>
+                        <h3 class="ml-4 text-lg font-semibold text-neutral-900">Python 开发工具包</h3>
+                    </div>
+                    
+                    <p class="text-neutral-600 text-sm mb-6">
+                        这个工具包包含了Python开发常用的库、脚本和开发环境配置，适合数据科学、Web开发和自动化任务。
+                    </p>
+                    
+                    <div class="flex items-center text-xs text-neutral-500 mb-6">
+                        <div class="flex items-center mr-4">
+                            <i class="fa fa-calendar-o mr-1"></i>
+                            <span>更新于 2025-06-28</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fa fa-file-o mr-1"></i>
+                            <span>大小: 95 MB</span>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="block w-full py-3 px-4 bg-python text-white rounded-lg font-medium text-center hover:bg-python/90 transition-colors" onclick="downloadFile('Python 开发工具包', 'https://example.com/python-tools.zip')">
+                        <i class="fa fa-download mr-1"></i> 下载文件
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 文件说明区域 -->
+        <section class="mt-12 max-w-4xl mx-auto">
+            <div class="bg-white rounded-xl shadow-card p-6">
+                <h3 class="text-lg font-semibold text-neutral-900 mb-4">文件使用说明</h3>
+                
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 h-8 w-8 rounded-full bg-java/10 flex items-center justify-center mt-1">
+                            <i class="fa fa-coffee text-java text-sm"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h4 class="text-base font-medium text-neutral-900">Java Web 开发资源包</h4>
+                            <p class="text-sm text-neutral-600 mt-1">
+                                该资源包包含以下内容：Servlet API、JSP 库、Spring Framework、Hibernate ORM、Maven 配置文件以及示例项目结构。
+                                适合用于开发基于Java的Web应用程序和服务。<br>
+                                <strong>下载链接：</strong> <a href="https://47.104.135.230:18782/down/54K5pFUEmemB.dat" target="_blank">点击直接下载</a>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 h-8 w-8 rounded-full bg-python/10 flex items-center justify-center mt-1">
+                            <i class="fa fa-code text-python text-sm"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h4 class="text-base font-medium text-neutral-900">Python 开发工具包</h4>
+                            <p class="text-sm text-neutral-600 mt-1">
+                                该工具包包含以下内容：Anaconda 环境配置、NumPy、Pandas、Matplotlib、Django、Flask 框架以及常用脚本。
+                                适合数据科学、Web开发和自动化脚本开发。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-neutral-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-neutral-400 text-sm">© 2025 文件下载中心 | 更新于 <span id="updateDate">2025-06-28</span></p>
+        </div>
     </footer>
 
     <script>
         // 设置更新日期
         document.getElementById('updateDate').textContent = new Date().toLocaleDateString();
         
-        // 简单的点击反馈
-        const downloadBtn = document.querySelector('.download-btn');
-        downloadBtn.addEventListener('click', function() {
-            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 正在下载...';
-        });
+        // 实际下载功能实现
+        function downloadFile(fileName, fileUrl) {
+            // 显示下载中状态
+            const button = event.target;
+            const originalText = button.innerHTML;
+            button.disabled = true;
+            button.innerHTML = '<i class="fa fa-spinner fa-spin mr-1"></i> 正在下载...';
+            
+            // 创建下载链接
+            const link = document.createElement('a');
+            link.href = fileUrl;
+            link.download = fileName + '.dat'; // 保留原始扩展名，可根据实际情况修改
+            
+            // 触发下载
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // 恢复按钮状态（模拟下载完成，实际应根据网络状态处理）
+            setTimeout(() => {
+                button.disabled = false;
+                button.innerHTML = originalText;
+            }, 1500);
+        }
     </script>
 </body>
 </html>

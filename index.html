@@ -3,24 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文件下载</title>
     <style>
         body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
             font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
+        }
+        
+        .download-container {
             text-align: center;
         }
         
         .download-btn {
             display: inline-block;
-            margin: 20px;
-            padding: 10px 20px;
+            margin: 20px 30px;
             color: #000;
             text-decoration: none;
             border-bottom: 2px solid #000;
-            font-size: 18px;
+            font-size: 24px;
             transition: all 0.2s;
         }
         
@@ -28,39 +32,12 @@
             background-color: #000;
             color: #fff;
         }
-        
-        .file-info {
-            margin-top: 30px;
-            padding: 20px;
-            border-top: 1px solid #eee;
-            text-align: left;
-            font-size: 14px;
-            color: #666;
-        }
-        
-        footer {
-            margin-top: 50px;
-            color: #999;
-            font-size: 12px;
-        }
     </style>
 </head>
 <body>
-    <h1>文件下载</h1>
-    
     <div class="download-container">
         <a href="https://47.104.135.230:18782/down/54K5pFUEmemB.dat" class="download-btn" download>Java Web</a>
         <a href="https://47.104.135.230:18782/down/kqW8dG6v0xMZ.php" class="download-btn" download>Python</a>
     </div>
-    
-    <div class="file-info">
-        <h3>文件说明</h3>
-        <p><strong>Java Web</strong>: 这是一个Java Web开发资源包，包含了开发所需的核心库和示例代码。</p>
-        <p><strong>Python</strong>: 这是一个Python开发工具包，包含常用库和开发环境配置。</p>
-    </div>
-    
-    <footer>
-        <p>© 2025 文件下载中心 | 最后更新: 2025-06-28</p>
-    </footer>
 </body>
 </html>
